@@ -11,6 +11,10 @@ public class Pruner {
 	public ArrayList<jade.tree.Tree> go(){
 		for(int i=0;i<intrees.size();i++){ 
 			for(int j=0;j<names.size();j++){
+				if(intrees.get(i).getExternalNode(names.get(j)) == null){
+					System.out.println("name: "+names.get(j)+" not in tree. exiting....");
+					System.exit(0);
+				}
 			/*
 			 * added for nodes whose parents are the root
 			 * when that happens
