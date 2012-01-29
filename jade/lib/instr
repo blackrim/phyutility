@@ -1,0 +1,1 @@
+use java -Djava.library.path=lib/ -jar jarfile
