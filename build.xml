@@ -1,0 +1,20 @@
+<project name="phyutility" basedir=".">
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes"/>
+    </target>
+    <target name="jar">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/phyutility.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="phyutility.mainrunner.Main"/>
+            </manifest>
+        </jar>
+    </target>
+    <target name="run">
+        <java jar="build/jar/phyutility.jar" fork="true"/>
+    </target>
+</project>

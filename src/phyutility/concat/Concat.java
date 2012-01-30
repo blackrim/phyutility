@@ -39,6 +39,10 @@ public class Concat {
 				try {
 					FastaImporter fi = new FastaImporter(file,SequenceType.NUCLEOTIDE);
 					ArrayList<Sequence> seqs = (ArrayList<Sequence>)fi.importSequences();
+					if(testDups(seqs) == true){
+						System.err.println("you have duplicate taxa in file "+filename);
+						System.exit(0);
+					}
 					allSeqs.add(seqs);
 					union(seqs);
 					if(testSeqLengths(seqs)==true){
@@ -141,7 +145,23 @@ public class Concat {
 		return ret;
 	}
 
-
+	private boolean testDups(ArrayList<Sequence> seqs){
+		ArrayList<String> names = new ArrayList<String>();
+		for(int i=0;i<seqs.size();i++){
+			boolean b = false;
+			for(int j = 0;j<names.size();j++){
+				if(((Sequence)seqs.get(i)).getTaxon().getName().trim().compareTo(names.get(j))==0){
+					b = true;
+				}
+			}
+			if(b == false){
+				names.add(((Sequence)seqs.get(i)).getTaxon().getName().trim());
+			}else{
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 	public void printtofileNEXUS(String outfile){
