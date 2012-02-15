@@ -5,7 +5,8 @@ import java.sql.*;
 public class WwdEmbedded {
 	//   ## DEFINE VARIABLES SECTION ##
 	// define the driver to use 
-	String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+//	String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+	String driver = "org.sqlite.JDBC";
 	// the database name  
 	String dbName = "derbydatabase";
 	// define the Derby connection URL to use 

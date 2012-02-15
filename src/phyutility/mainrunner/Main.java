@@ -115,8 +115,11 @@ public class Main {
 				linmovement = true;
 				log("lineage movement\n");
 			}else if(args[i].toLowerCase().compareTo("-derb")==0){
-				derb = true;
+				//derb = true;
+				derb = false;
 				log("trying to use derby database for trees\n");
+				log("DERBY NO LONGER SUPPORTED [not free]\n");
+				System.exit(0);
 			}else if(args[i].toLowerCase().compareTo("-ts")==0){
 				treesupp = true;
 				log("tree support\n");
@@ -1389,7 +1392,7 @@ public class Main {
 	}
 
 	private void printUsage(){
-		System.out.println("Phyutility (fyoo-til-i-te) v.2.2.3");
+		System.out.println("Phyutility (fyoo-til-i-te) v.2.2.4");
 		System.out.println("Stephen A. Smith http://www.blackrim.org eebsmith@umich.edu");
 		System.out.println("help on a specific command use option -h <command>");
 		System.out.println("commands:");
