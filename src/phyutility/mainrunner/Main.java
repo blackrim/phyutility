@@ -26,7 +26,8 @@ public class Main {
 	private boolean derb = false;
 	//sequence functions
 	private boolean concat = false;
-	private boolean clean = false; 
+	private boolean clean = false;
+	private String seqtypeset = "test";
 	private double cleannum = 0.5;
 	private boolean parse = false;
 	private int parsenum = 1;
@@ -205,6 +206,8 @@ public class Main {
 					cleannum = Double.valueOf(args[i]);
 					log("cleannum: "+cleannum+"\n");
 				}
+			}else if(args[i].toLowerCase().compareTo("-aa") == 0){
+				seqtypeset = "aa";
 			}else if(args[i].toLowerCase().compareTo("-parse")==0){
 				parse = true;
 				log("parse\n");
@@ -1225,7 +1228,13 @@ public class Main {
 		if(infiles.size() > 1){
 			System.err.println("Trimming is done one file at a time, only the first file will be used.");
 		}
-		phyutility.trimsites.TrimSites ts = new phyutility.trimsites.TrimSites(infiles.get(0));
+		String seqtype = "test";
+		if(seqtypeset == "aa"){
+			seqtype = "aa";
+		}else if (seqtypeset == "nucleotide"){
+			seqtype = "nucleotide";
+		}
+		phyutility.trimsites.TrimSites ts = new phyutility.trimsites.TrimSites(infiles.get(0),seqtype);
 		ts.trimAln(cleannum);
 		if(testForNexus(infiles.get(0))){
 			if(out_oth == true){

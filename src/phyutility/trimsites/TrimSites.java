@@ -13,12 +13,17 @@ public class TrimSites {
 	private BasicAlignment origaln;
 	private BasicAlignment trimedalign;
 
-	public TrimSites(String filename){
+	public TrimSites(String filename, String seqtype){
 		/*
 		 * test for nucleotide vs amino acid
 		 */
 		SequenceType usetype = null;
-		usetype = testForSeqType(filename);
+		if (seqtype.compareTo("test") == 0)
+			usetype = testForSeqType(filename);
+		else if(seqtype.compareTo("nucleotide") == 0)
+			usetype = SequenceType.NUCLEOTIDE;
+		else if(seqtype.compareTo("aa") == 0)
+			usetype = SequenceType.AMINO_ACID;
 		//System.out.println(usetype.toString());
 		if(testForNexus(filename) == false){
 			File file = new File(filename);
@@ -148,7 +153,7 @@ public class TrimSites {
 	public static void main(String[] args) {
 
 		// TODO Auto-generated method stub
-		TrimSites ts = new TrimSites("/Users/smitty/programming/RELEASES/phyutility/examples/test.fasta");
+		TrimSites ts = new TrimSites("/Users/smitty/programming/RELEASES/phyutility/examples/test.fasta","nucleotide");
 		BasicAlignment test = ts.trimAln(0.49);
 		System.out.println("trimed length = "+test.getSiteCount());
 		/*Iterator<Sequence> seqs = test.getSequences().iterator();
