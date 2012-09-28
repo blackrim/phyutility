@@ -1200,7 +1200,7 @@ public class TestFuncs {
 	 * assumes different files are different genes
 	 */
 	private void concat(){
-		Concat cc = new Concat(infiles);
+		Concat cc = new Concat(infiles,"test");
 		if(outfile != null){
 			if(out_oth == true){
 				cc.printtofileFASTA(outfile);

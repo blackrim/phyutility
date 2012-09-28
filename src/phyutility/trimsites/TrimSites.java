@@ -6,6 +6,7 @@ import jebl.evolution.alignments.*;
 import jebl.evolution.io.*;
 import jebl.evolution.sequences.Sequence;
 import jebl.evolution.sequences.SequenceType;
+import jebl.evolution.sequences.State;
 import jebl.evolution.taxa.Taxon;
 
 public class TrimSites {
@@ -87,7 +88,35 @@ public class TrimSites {
 		return trimedalign;
 	}
 
-
+	/*
+	 * do after the trimAln
+	 */
+	public BasicAlignment trimAlnCleanMessy(double perc){
+		ArrayList<Integer> sites = new ArrayList<Integer>();
+		for(int i=0;i<trimedalign.getSiteCount();i++){
+			ArrayList<String> sitestates = new ArrayList<String> ();
+			Iterator <Sequence> seqs = trimedalign.getSequences().iterator();
+			while(seqs.hasNext()){
+				State tstate = seqs.next().getState(i);
+				if (sitestates.contains(tstate.getName()) == false){
+					sitestates.add(tstate.getName());
+				}
+			}
+			if((sitestates.size()/(double)(trimedalign.getSequences().size()))<(1-perc)){
+				sites.add(i);
+			}
+		}
+		System.out.println(sites.size());
+		ResampledAlignment ra = new ResampledAlignment();
+		int [] iar = new int [sites.size()];
+		for(int i=0;i<iar.length;i++){
+			iar[i] = sites.get(i);
+		}
+		ra.init(trimedalign, iar);
+		trimedalign = new BasicAlignment (ra.getSequences());
+		return trimedalign;
+	}
+	
 	public void printNexusOutfile(String outfile){
 		try {
 			FileWriter pw = new FileWriter(outfile);

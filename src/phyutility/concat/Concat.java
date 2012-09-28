@@ -14,10 +14,12 @@ public class Concat {
 	private ArrayList <ArrayList<Sequence>> allSeqs;
 	private ArrayList <Sequence> finalSeqs;
 	private ArrayList <Integer> geneLengths;
+	private String seqtype;
 	
 	
-	public Concat(ArrayList <String> files){
+	public Concat(ArrayList <String> files, String seqtype){
 		this.files = files;
+		this.seqtype = seqtype;
 		finalNames = new ArrayList <String>();
 		geneLengths = new ArrayList<Integer>();
 		allSeqs = new ArrayList <ArrayList<Sequence>>();
@@ -31,13 +33,20 @@ public class Concat {
 		 * this should union the taxa names
 		 * and make sure that genelengths are correct
 		 */
+		SequenceType usetype = null;
+		if (seqtype.compareTo("test") == 0)
+			usetype = testForSeqType(files.get(0));
+		else if(seqtype.compareTo("nucleotide") == 0)
+			usetype = SequenceType.NUCLEOTIDE;
+		else if(seqtype.compareTo("aa") == 0)
+			usetype = SequenceType.AMINO_ACID;
 		for(int i=0;i<files.size();i++){
 			String filename = (String)files.get(i);
 			File file = new File(filename);
 			refiles.add(file);
 			if(testForNexus(filename) == false){
 				try {
-					FastaImporter fi = new FastaImporter(file,SequenceType.NUCLEOTIDE);
+					FastaImporter fi = new FastaImporter(file,usetype);
 					ArrayList<Sequence> seqs = (ArrayList<Sequence>)fi.importSequences();
 					if(testDups(seqs) == true){
 						System.err.println("you have duplicate taxa in file "+filename);
@@ -86,7 +95,7 @@ public class Concat {
 		 * this creates a new sequence (the final one) from the union which will be used to make the concatenated sequences
 		 */
 		for(int i=0;i<finalNames.size();i++){
-			BasicSequence seq = new BasicSequence(SequenceType.NUCLEOTIDE,Taxon.getTaxon(finalNames.get(i)),"");
+			BasicSequence seq = new BasicSequence(usetype,Taxon.getTaxon(finalNames.get(i)),"");
 			finalSeqs.add(seq);
 		}
 		/*
@@ -98,7 +107,7 @@ public class Concat {
 				boolean here = false;
 				for(int k=0;k<allSeqs.get(i).size();k++){
 					if(finalSeqs.get(j).getTaxon().getName().compareTo(allSeqs.get(i).get(k).getTaxon().getName())==0){
-						finalSeqs.set(j,new BasicSequence(SequenceType.NUCLEOTIDE,finalSeqs.get(j).getTaxon(),
+						finalSeqs.set(j,new BasicSequence(usetype,finalSeqs.get(j).getTaxon(),
 								(finalSeqs.get(j).getString()+allSeqs.get(i).get(k).getString())));
 						here = true;
 					}
@@ -108,13 +117,15 @@ public class Concat {
 					for(int k = 0;k<geneLengths.get(i);k++){
 						tst = tst+"-";
 					}
-					finalSeqs.set(j,new BasicSequence(SequenceType.NUCLEOTIDE,finalSeqs.get(j).getTaxon(),
+					finalSeqs.set(j,new BasicSequence(usetype,finalSeqs.get(j).getTaxon(),
 							(finalSeqs.get(j).getString()+tst)));
 				}
 			}
 		}
 	}
 
+	
+	
 	private void union(ArrayList<Sequence> seqs){
 		if(finalNames.size()<1){
 			for(int i=0;i< seqs.size();i++){

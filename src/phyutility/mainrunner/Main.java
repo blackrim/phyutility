@@ -29,6 +29,8 @@ public class Main {
 	private boolean clean = false;
 	private String seqtypeset = "test";
 	private double cleannum = 0.5;
+	private boolean cleanmessy = false;
+	private double cleanmessynum = 0.1;
 	private boolean parse = false;
 	private int parsenum = 1;
 	private boolean ncbisearch = false;
@@ -191,7 +193,7 @@ public class Main {
 					i--;
 				}
 			}
-			//seqence
+			//sequence
 			else if(args[i].toLowerCase().compareTo("-concat")==0){
 				concat = true;
 				log("concat\n");
@@ -205,6 +207,17 @@ public class Main {
 				}else{
 					cleannum = Double.valueOf(args[i]);
 					log("cleannum: "+cleannum+"\n");
+				}
+			}else if(args[i].toLowerCase().compareTo("-cleanmessy")==0){
+				log("cleanmessy\n");
+				cleanmessy = true;
+				i++;
+				if(args[i].charAt(0)=='-'){
+					System.err.println("you have to enter a cleannum after -cleanmessy");
+					System.exit(0);
+				}else{
+					cleanmessynum = Double.valueOf(args[i]);
+					log("cleanmessynum: "+cleanmessynum+"\n");
 				}
 			}else if(args[i].toLowerCase().compareTo("-aa") == 0){
 				seqtypeset = "aa";
@@ -1149,7 +1162,13 @@ public class Main {
 	 * assumes different files are different genes
 	 */
 	private void concat(){
-		Concat cc = new Concat(infiles);
+		String seqtype = "test";
+		if(seqtypeset == "aa"){
+			seqtype = "aa";
+		}else if (seqtypeset == "nucleotide"){
+			seqtype = "nucleotide";
+		}
+		Concat cc = new Concat(infiles,seqtype);
 		if(outfile != null){
 			if(out_oth == true){
 				cc.printtofileFASTA(outfile);
@@ -1236,6 +1255,9 @@ public class Main {
 		}
 		phyutility.trimsites.TrimSites ts = new phyutility.trimsites.TrimSites(infiles.get(0),seqtype);
 		ts.trimAln(cleannum);
+		if(cleanmessy == true){
+			ts.trimAlnCleanMessy(cleanmessynum);
+		}
 		if(testForNexus(infiles.get(0))){
 			if(out_oth == true){
 				ts.printFastaOutfile(outfile);
