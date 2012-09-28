@@ -1423,7 +1423,7 @@ public class Main {
 	}
 
 	private void printUsage(){
-		System.out.println("Phyutility (fyoo-til-i-te) v.2.2.4");
+		System.out.println("Phyutility (fyoo-til-i-te) v.2.2.6");
 		System.out.println("Stephen A. Smith http://www.blackrim.org eebsmith@umich.edu");
 		System.out.println("help on a specific command use option -h <command>");
 		System.out.println("commands:");
@@ -1517,6 +1517,7 @@ public class Main {
 			System.out.println("	-clean # | designates that you want to trim and the threshold must follow");
 			System.out.println("	-in <file name> ... | input file names");
 			System.out.println("	-out <file name> | output file name");
+			System.out.println("	-aa | force amino acid files");
 			System.out.println("java -jar phyutility.jar -clean 0.5 -in test.nex -out test50.nex");
 		}else if(cmd.compareTo("concat") == 0){
 			System.out.println("concatenate alignments together");
@@ -1524,6 +1525,7 @@ public class Main {
 			System.out.println("	-concat | designates that you want to concatenate");
 			System.out.println("	-in <file name> ... | input file names");
 			System.out.println("	-out <file name> | output file name");
+			System.out.println("	-aa | force amino acid files");
 			System.out.println("java -jar phyutility.jar -concat -in test.aln test2.aln -out testall.aln");
 		}else if(cmd.compareTo("ncbiget") == 0){
 			System.out.println("fetch sequences from ncbi");
