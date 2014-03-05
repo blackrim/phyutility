@@ -7,11 +7,13 @@ import jebl.gui.trees.treeviewer_dev.decorators.Decorator;
 import jebl.gui.trees.treeviewer_dev.painters.*;
 import jebl.gui.trees.treeviewer_dev.treelayouts.*;
 
-import javax.swing.*;
+//import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.print.*;
 import java.util.*;
+
+import javax.swing.JComponent;
 
 /**
  * @author Andrew Rambaut
