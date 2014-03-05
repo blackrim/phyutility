@@ -18,7 +18,15 @@ import org.virion.jam.controlpanels.ControlsProvider;
 import org.virion.jam.controlpanels.ControlsSettings;
 import org.virion.jam.panels.OptionsPanel;
 
-import javax.swing.*;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JViewport;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.UIManager;
+//import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
