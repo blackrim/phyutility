@@ -1423,7 +1423,7 @@ public class Main {
 	}
 
 	private void printUsage(){
-		System.out.println("Phyutility (fyoo-til-i-te) v.2.2.6");
+		System.out.println("Phyutility (fyoo-til-i-te) v.2.7.1");
 		System.out.println("Stephen A. Smith http://www.blackrim.org eebsmith@umich.edu");
 		System.out.println("help on a specific command use option -h <command>");
 		System.out.println("commands:");
